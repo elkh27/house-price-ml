@@ -7,6 +7,11 @@ from streamlit_folium import st_folium
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
+BASEMAP_URL = (
+    "https://server.arcgisonline.com/ArcGIS/rest/services/"
+    "Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+)
+
 st.set_page_config(page_title="House Price Predictor", page_icon="🏠", layout="wide")
 st.title("🏠 California House Price Predictor")
 st.write("Click anywhere on the map to choose a location, set the house details, then click **Predict**.")
@@ -25,13 +30,12 @@ with st.sidebar:
 map_col, result_col = st.columns([2, 1])
 
 with map_col:
-        m = folium.Map(
+    m = folium.Map(
         location=[37.2, -119.5],
         zoom_start=6,
-        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        tiles=BASEMAP_URL,
         attr="Tiles &copy; Esri",
     )
-        
     folium.Marker(
         [st.session_state.lat, st.session_state.lon],
         tooltip="Selected location",
