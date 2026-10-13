@@ -25,7 +25,13 @@ with st.sidebar:
 map_col, result_col = st.columns([2, 1])
 
 with map_col:
-    m = folium.Map(location=[37.2, -119.5], zoom_start=6, tiles="OpenStreetMap")
+        m = folium.Map(
+        location=[37.2, -119.5],
+        zoom_start=6,
+        tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        attr="Tiles &copy; Esri",
+    )
+        
     folium.Marker(
         [st.session_state.lat, st.session_state.lon],
         tooltip="Selected location",
