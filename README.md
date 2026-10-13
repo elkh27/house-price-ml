@@ -7,6 +7,8 @@ An end-to-end machine learning service that predicts California house values fro
 **Live demo:** https://house-ui-l0c0.onrender.com
 **API docs:** https://house-price-ml-nb1a.onrender.com/docs
 
+An end-to-end machine learning service that predicts California house values from location and housing features. A Random Forest model is served through a FastAPI REST API, and users pick a location by clicking on an interactive Folium map in a Streamlit app. Both services are containerized with Docker, run together with a single command, and are deployed on Render with continuous deployment from GitHub.
+
 > Hosted on Render's free tier, so the first request after a period of inactivity may take up to a minute while the services wake up.
 
 ![Screenshot](screenshot.png)
@@ -35,12 +37,16 @@ docker compose up --build
 
 ## Model
 
+## Model
+
 - **Algorithm:** Random Forest Regressor (scikit-learn)
 - **Data:** California Housing dataset (20,640 census block groups)
 - **Features:** median income, house age, average rooms, latitude, longitude
 - **Test set results:** MAE = 0.376, R² = 0.763
+- **Coverage check:** the API rejects locations more than 5 km from any training data point (for example the ocean), using a BallTree nearest-neighbor search with haversine distance, so the model never returns a confident-looking price for places it knows nothing about.
 
 Location is a strong predictor: with all other inputs equal, coastal locations such as San Francisco are predicted much higher than inland cities such as Fresno.
+
 
 ## API
 
