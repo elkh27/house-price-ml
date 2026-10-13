@@ -4,12 +4,18 @@
 
 An end-to-end machine learning service that predicts California house values from location and housing features. A Random Forest model is served through a FastAPI REST API, with an interactive Streamlit map interface. Both services are containerized with Docker and run together with a single command.
 
+**Live demo:** https://house-ui-l0c0.onrender.com
+**API docs:** https://house-price-ml-nb1a.onrender.com/docs
+
+> Hosted on Render's free tier, so the first request after a period of inactivity may take up to a minute while the services wake up.
+
 ![Screenshot](screenshot.png)
 
 ## Architecture
 
 ```
 Browser → Streamlit UI (:8501) → FastAPI (:8000) → Random Forest model
+In production, each service runs as a separate Docker web service on Render, with automatic redeploys on every push to `main`.
 ```
 
 Docker Compose runs the UI and API as separate containers on a shared network. The UI reaches the API by its service name, configured through an environment variable.
@@ -74,6 +80,6 @@ cd api && python -m pytest -v
 
 ## Next steps
 
-- Deploy to a cloud platform
+- Add automated tests for the Streamlit UI
 - Add model versioning and experiment tracking
 - Add request logging and monitoring
