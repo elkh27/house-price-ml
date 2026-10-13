@@ -22,5 +22,13 @@ pred = model.predict(X_test)
 print(f"MAE: {mean_absolute_error(y_test, pred):.3f}")
 print(f"R2:  {r2_score(y_test, pred):.3f}")
 
-joblib.dump({"model": model, "features": FEATURES}, "api/model.joblib", compress=3)
+joblib.dump(
+    {
+        "model": model,
+        "features": FEATURES,
+        "coords": df[["Latitude", "Longitude"]].to_numpy(),
+    },
+    "api/model.joblib",
+    compress=3,
+)
 print("Model saved to api/model.joblib")

@@ -34,3 +34,10 @@ def test_invalid_latitude_is_rejected():
 def test_missing_fields_are_rejected():
     response = client.post("/predict", json={"MedInc": 4.0})
     assert response.status_code == 422
+
+
+def test_ocean_location_is_rejected():
+    ocean_point = {**VALID_HOUSE, "Latitude": 36.0, "Longitude": -123.5}
+    response = client.post("/predict", json=ocean_point)
+    assert response.status_code == 422
+    assert "training data" in response.json()["detail"]
